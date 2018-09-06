@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charSet="utf-8" class="next-head next-head" />
+    <title class="next-head">{{page.title}} - 设计文档</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" class="next-head" />
+    <style class="next-head">
+        .page-content {
+            display: none
+        }
+    </style>
+    <link rel="stylesheet" href="{{site.baseurl}}/assets/css/tachyons.min.css">
+    {% if page.toc %}
+    <link rel="stylesheet" href="{{site.baseurl}}/assets/css/tocbot.css">
+    <script src="{{site.baseurl}}/assets/js/tocbot.min.js"></script>
+    {% endif %}
+    <link rel="stylesheet" href="{{site.baseurl}}/assets/css/style.css">
+    <link rel="stylesheet" href="{{site.baseurl}}/assets/css/default.css">
+</head>
+
+<body>
+    <div class="page-content" data-reactroot="">
+        <main>
+            <div class="hero relative overflow-hidden tc z-3" style="background-color:#27544c">
+                <div class="hero-inner relative mw8 center white pv4">
+                    <div class="pv4">
+                        <h1 class="title normal ma0 pa0">上山爬海</h1>
+                        <h4 class="subtitle normal o-90 ma0 pa3">
+                            {{ page.abstract }}
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <div class="mw8 center dark-gray lh-copy">
+                {% if page.toc %}
+                <input type="checkbox" id="toc" class="dn" />
+                <label class="toc-icon relative pointer z-2 f6 lh-solid bg-near-white b--silver pa1 ma1 ba br1" for="toc">Menu</label>
+                <nav class="toc-nav relative z-1 transition--300 absolute">
+                    {% for doc in site.docs %}
+                        {% if doc.url == page.url %}
+                        <div class="toc js-toc"></div>
+                        {% else %}
+                        <div>
+                            <a class="toc-list toc-link toc-ext" href="{{ site.baseurl }}{{ doc.url }}"> {{ doc.title }} </a>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </nav>
+                {% endif %}
+                <div class="content js-toc-content pa4">
+                    {{ content }}
+                </div>
+            </div>
+        </main>
+    </div>
+    {% if page.toc %}
+    <script>
+        var posSelector = '.toc-nav';
+        tocbot.init({
+            // Where to render the table of contents.
+            tocSelector: '.js-toc',
+            // Where to grab the headings to build the table of contents.
+            contentSelector: '.js-toc-content',
+            // Which headings to grab inside of the contentSelector element.
+            headingSelector: 'h1, h2, h3',
+            positionFixedSelector: posSelector,
+            // Fixed position class to add to make sidebar fixed after scrolling
+            // down past the fixedSidebarOffset.
+            positionFixedClass: 'is-position-fixed',
+            // fixedSidebarOffset can be any number but by default is set
+            // to auto which sets the fixedSidebarOffset to the sidebar
+            // element's offsetTop from the top of the document on init.
+            fixedSidebarOffset: document.querySelector(posSelector).offsetTop,
+        });
+    </script> {% endif %}
+</body>
+
+</html>

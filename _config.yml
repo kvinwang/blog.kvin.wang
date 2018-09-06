@@ -1,0 +1,14 @@
+url: https://blog.kvin.wang/
+baseurl: /
+markdown: KramdownPygments
+collections:
+  docs:
+    output: true
+
+defaults:
+  -
+    scope:
+      path: ""
+    values:
+      layout: "mddef"
+      toc: true
